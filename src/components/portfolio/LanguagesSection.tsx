@@ -1,7 +1,8 @@
 import React from 'react';
 import {Code} from 'lucide-react';
-import type {LanguageStats} from '../../types/LanguageStats';
-import {LanguageCard} from '../ui';
+import type {LanguageStats} from '@/types';
+import {LanguageCard} from '@/components/ui';
+import {getTopLanguages, GITHUB_CONFIG} from '@/utils';
 
 interface LanguagesSectionProps {
     languages: LanguageStats;
@@ -14,12 +15,13 @@ export const LanguagesSection: React.FC<LanguagesSectionProps> = ({
                                                                       onLanguageSelect,
                                                                       darkMode
                                                                   }) => {
-    const topLanguages = Object.entries(languages)
-                               .sort(([, a], [, b]) => b - a)
-                               .slice(0, 8);
+    const topLanguages = getTopLanguages(languages, GITHUB_CONFIG.TOP_LANGUAGES_LIMIT);
 
-    return (<div
-        className={`${darkMode ? 'bg-white/5' : 'bg-white/50'} backdrop-blur-xl rounded-2xl p-6 border ${darkMode ? 'border-white/10' : 'border-white/30'} mb-12`}>
+    return (<div className={`
+            ${darkMode ? 'bg-white/5' : 'bg-white/50'} 
+            backdrop-blur-xl rounded-2xl p-6 border 
+            ${darkMode ? 'border-white/10' : 'border-white/30'} mb-12
+        `}>
         <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
             <Code className="text-purple-500"/>
             Most Used Languages

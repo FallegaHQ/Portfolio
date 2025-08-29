@@ -1,4 +1,4 @@
-import type {CachedAvatar} from '../types/CachedAvatar';
+import type {CachedAvatar} from '@/types';
 
 class CacheService {
     private readonly AVATAR_CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours

@@ -1,6 +1,7 @@
 import React from 'react';
-import {ExternalLink, Github} from 'lucide-react';
-import type {GitHubProfile} from '../../types/GitHubProfile';
+import {ExternalLink, Github, Phone} from 'lucide-react';
+import {CONTACT} from '@/utils'
+import type {GitHubProfile} from '@/types'
 
 interface ContactSectionProps {
     username: string;
@@ -38,6 +39,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 <ExternalLink size={20}/>
                 Website
             </a>)}
+            <a
+                href={CONTACT.SKYPE_CALL_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-green-500 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 flex items-center gap-2"
+            >
+                <Phone size={20}/>
+                Call me now!
+            </a>
         </div>
     </div>);
 };

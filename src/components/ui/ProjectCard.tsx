@@ -1,61 +1,81 @@
-import React from 'react';
-import {ExternalLink, GitFork, GithubIcon, Star} from 'lucide-react';
-import type {GitHubRepository} from '../../types/GitHubRepository';
+import React from 'react'
+import type {Project} from '@/types'
+import {ChevronRight, ExternalLink} from 'lucide-react'
 
-interface ProjectCardProps {
-    repo: GitHubRepository;
+export const ProjectCard: React.FC<{
+    project: Project;
     darkMode: boolean;
-}
+    statusIcon: React.ComponentType<{
+        size: number;
+        className?: string
+    }>;
+    statusColor: string
+}> = ({
+          project,
+          darkMode,
+          statusIcon: StatusIcon,
+          statusColor
+      }) => (<div className={`
+        ${darkMode ? 'bg-white/5' : 'bg-white/50'} 
+        backdrop-blur-xl rounded-2xl p-6 border 
+        ${darkMode ? 'border-white/10' : 'border-white/30'}
+        hover:scale-105 transition-all duration-300
+    `}>
+        <div className="flex items-start justify-between mb-4">
+            <h3 className="text-xl font-bold">{project.name}</h3>
+            <div className="flex items-center gap-2">
+                <StatusIcon size={16} className={`text-${statusColor}-500`}/>
+                <span
+                    className={`px-2 py-1 rounded-full text-xs bg-${statusColor}-500/20 text-${statusColor}-400 capitalize`}>
+                    {project.status.replace('-', ' ')}
+                </span>
+            </div>
+        </div>
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({
-                                                            repo,
-                                                            darkMode
-                                                        }) => {
-    return (<div
-            className={`${darkMode ? 'bg-white/5' : 'bg-white/50'} backdrop-blur-xl rounded-2xl p-6 border ${darkMode ? 'border-white/10' : 'border-white/30'} hover:scale-105 transition-all duration-300 group`}>
-            <div className="flex justify-between items-start mb-4">
-                <h3 className="font-bold text-xl truncate">{repo.name}</h3>
-                <div className="flex gap-2">
-                    <a
-                        href={repo.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors"
+        <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
+            {project.description}
+        </p>
+
+        <div className="mb-4">
+            <div className="flex flex-wrap gap-2 mb-3">
+                {project.technologies.map((tech, index) => (<span
+                        key={index}
+                        className={`px-2 py-1 rounded-lg text-xs ${darkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-700'}`}
                     >
-                        <GithubIcon size={16}/>
-                    </a>
-                    {repo.homepage && (<a
-                            href={repo.homepage}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors"
-                        >
-                            <ExternalLink size={16}/>
-                        </a>)}
-                </div>
+                        {tech}
+                    </span>))}
             </div>
+        </div>
 
-            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-4 h-12 overflow-hidden`}>
-                {repo.description || 'No description available'}
-            </p>
+        <div className="mb-4">
+            <h4 className="font-semibold mb-2">Highlights</h4>
+            <ul className="space-y-1">
+                {project.highlights.map((highlight, index) => (<li key={index}
+                                                                   className={`flex items-start gap-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <ChevronRight size={14} className="mt-0.5 text-blue-500 shrink-0"/>
+                        {highlight}
+                    </li>))}
+            </ul>
+        </div>
 
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm">
-                    {repo.language &&
-                     (
-                         <span
-                             className={`px-3 py-1 rounded-full text-xs ${darkMode ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`}>
-              {repo.language}
-            </span>)}
-                    <span className={`flex items-center gap-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            <Star size={14}/>
-                        {repo.stargazers_count}
-          </span>
-                    <span className={`flex items-center gap-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-            <GitFork size={14}/>
-                        {repo.forks_count}
-          </span>
-                </div>
-            </div>
-        </div>);
-};
+        <div className="flex gap-2">
+            {project.githubUrl && (<a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors flex items-center gap-1"
+                >
+                    <ExternalLink size={14}/>
+                    Code
+                </a>)}
+            {project.liveUrl && (<a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors flex items-center gap-1"
+                >
+                    <ExternalLink size={14}/>
+                    Live Demo
+                </a>)}
+        </div>
+    </div>);

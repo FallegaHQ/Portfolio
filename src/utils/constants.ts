@@ -16,3 +16,7 @@ export const THEME_CONFIG = {
     DARK       : 'dark',
     LIGHT      : 'light',
 } as const;
+
+export const CONTACT = {
+    SKYPE_CALL_LINK: 'https://call.whatsapp.com/video/L1nOl9rdGXkpC4vC3fEnLW'
+}

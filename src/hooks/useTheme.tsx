@@ -1,20 +1,34 @@
 import {useEffect, useState} from 'react';
+import {THEME_CONFIG} from '@/utils';
 
 export const useTheme = () => {
     const [darkMode, setDarkMode] = useState<boolean>(() => {
-        // Initialize from localStorage or system preference
-        if(typeof window !== 'undefined'){
-            const saved = localStorage.getItem('github-portfolio-theme');
-            if(saved){
-                return saved === 'dark';
-            }
-            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if(typeof window === 'undefined'){
+            return true;
         }
-        return false;
+
+        const saved = localStorage.getItem(THEME_CONFIG.STORAGE_KEY);
+        if(saved){
+            return saved === THEME_CONFIG.DARK;
+        }
+
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
     });
 
     useEffect(() => {
-        localStorage.setItem('github-portfolio-theme', darkMode ? 'dark' : 'light');
+        if(typeof window === 'undefined'){
+            return;
+        }
+
+        const theme = darkMode ? THEME_CONFIG.DARK : THEME_CONFIG.LIGHT;
+        localStorage.setItem(THEME_CONFIG.STORAGE_KEY, theme);
+
+        if(darkMode){
+            document.documentElement.classList.add('dark');
+        }
+        else{
+            document.documentElement.classList.remove('dark');
+        }
     }, [darkMode]);
 
     const toggleTheme = () => {
@@ -23,7 +37,6 @@ export const useTheme = () => {
 
     return {
         darkMode,
-        toggleTheme,
-        setDarkMode
+        toggleTheme
     };
 };

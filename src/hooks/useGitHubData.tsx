@@ -1,10 +1,9 @@
 import {useCallback, useEffect, useState} from 'react';
-import type {GitHubProfile} from '../types/GitHubProfile';
-import type {GitHubRepository} from '../types/GitHubRepository';
-import type {LanguageStats} from '../types/LanguageStats';
-import {cacheService, githubApi} from '../services';
+import type {GitHubProfile, GitHubRepository, LanguageStats} from '@/types';
+import {cacheService, githubApi} from '@/services';
+import {calculateLanguageStats, getFeaturedRepos, getTotalStars, GITHUB_CONFIG} from '@/utils';
 
-export const useGitHubData = (username: string) => {
+export const useGitHubData = (username: string = GITHUB_CONFIG.USERNAME) => {
     const [profile, setProfile]                   = useState<GitHubProfile | null>(null);
     const [repos, setRepos]                       = useState<GitHubRepository[]>([]);
     const [languages, setLanguages]               = useState<LanguageStats>({});
@@ -38,14 +37,8 @@ export const useGitHubData = (username: string) => {
                 setCachedAvatarUrl(profileData.avatar_url);
             }
 
-            // Process languages
-            const langMap: LanguageStats = {};
-            for(const repo of reposData){
-                if(repo.language){
-                    langMap[repo.language] = (langMap[repo.language] || 0) + 1;
-                }
-            }
-            setLanguages(langMap);
+            const langStats = calculateLanguageStats(reposData);
+            setLanguages(langStats);
 
         }
         catch(error){
@@ -60,9 +53,13 @@ export const useGitHubData = (username: string) => {
         fetchGitHubData();
     }, []);
 
+    const featuredRepos = getFeaturedRepos(repos, GITHUB_CONFIG.FEATURED_REPOS_LIMIT);
+    const totalStars    = getTotalStars(repos);
+
     return {
         profile,
         repos,
+        featuredRepos,
         languages,
         selectedLanguage,
         setSelectedLanguage,
@@ -70,6 +67,7 @@ export const useGitHubData = (username: string) => {
         setShowAllRepos,
         loading,
         cachedAvatarUrl,
+        totalStars,
         refetch: fetchGitHubData
     };
 };

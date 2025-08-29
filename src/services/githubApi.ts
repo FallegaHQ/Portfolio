@@ -1,5 +1,5 @@
-import type {GitHubProfile} from '../types/GitHubProfile';
-import type {GitHubRepository} from '../types/GitHubRepository';
+import type {GitHubProfile} from '@/types';
+import type {GitHubRepository} from '@/types';
 
 class GitHubApiService {
     private readonly proxyUrl = '/github-proxy.php';

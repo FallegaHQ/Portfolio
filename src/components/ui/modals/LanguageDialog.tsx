@@ -1,6 +1,6 @@
 import React from 'react';
 import {GitFork, Star, X} from 'lucide-react';
-import type {GitHubRepository} from '../../../types/GitHubRepository';
+import type {GitHubRepository} from '@/types';
 
 interface LanguageDialogProps {
     language: string;

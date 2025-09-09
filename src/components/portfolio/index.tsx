@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {useGitHubData, useProfileData, useTheme} from '@/hooks';
 import {Navigation, type ViewType} from '@/components/ui/Navigation';
 import {LanguageDialog} from '@/components/ui/modals/LanguageDialog';
@@ -16,14 +17,63 @@ import {SkillsView} from './SkillsView.tsx'
 import {ProjectsView} from './ProjectsView.tsx'
 import {usePageMeta} from "@hooks/usePageMeta.tsx";
 
-const Portfolio: React.FC = () => {
+// Map URL paths to ViewType
+const pathToView: Record<string, ViewType> = {
+    '/'          : 'experience',
+    '/experience': 'experience',
+    '/education' : 'education',
+    '/skills'    : 'skills',
+    '/projects'  : 'projects',
+    '/github'    : 'github'
+};
 
-    usePageMeta({
-                    title      : "SAKHRAOUI Omar | Softwyx",
-                    description: "This is the landing page where you get to meet me.",
-                    keywords   : "resuma, fallega, fallegahq, dev, fullstack, developer, softwyx"
-                });
-    const [activeView, setActiveView] = useState<ViewType>('experience');
+// Map ViewType to URL paths
+const viewToPath: Record<ViewType, string> = {
+    'experience': '/experience',
+    'education' : '/education',
+    'skills'    : '/skills',
+    'projects'  : '/projects',
+    'github'    : '/github'
+};
+
+// Page metadata for each view
+const viewMetadata: Record<ViewType, { title: string; description: string; keywords: string }> = {
+    experience: {
+        title      : "Experience | SAKHRAOUI Omar | Softwyx",
+        description: "Professional experience and career journey of SAKHRAOUI Omar, fullstack developer at Softwyx.",
+        keywords   : "experience, career, fullstack developer, softwyx, work history"
+    },
+    education : {
+        title      : "Education | SAKHRAOUI Omar | Softwyx",
+        description: "Educational background and qualifications of SAKHRAOUI Omar.",
+        keywords   : "education, qualifications, degrees, certificates, learning"
+    },
+    skills    : {
+        title      : "Skills | SAKHRAOUI Omar | Softwyx",
+        description: "Technical skills and expertise of SAKHRAOUI Omar in software development.",
+        keywords   : "skills, programming, technologies, expertise, development"
+    },
+    projects  : {
+        title      : "Projects | SAKHRAOUI Omar | Softwyx",
+        description: "Portfolio projects and work samples by SAKHRAOUI Omar.",
+        keywords   : "projects, portfolio, work samples, development projects"
+    },
+    github    : {
+        title      : "GitHub Profile | SAKHRAOUI Omar | Softwyx",
+        description: "GitHub profile and open source contributions of SAKHRAOUI Omar.",
+        keywords   : "github, open source, repositories, code, contributions"
+    }
+};
+
+const Portfolio: React.FC = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    // Determine current view from URL
+    const currentView = pathToView[location.pathname] || 'experience';
+
+    // Set page metadata based on current view
+    usePageMeta(viewMetadata[currentView]);
 
     const {
               darkMode,
@@ -50,7 +100,23 @@ const Portfolio: React.FC = () => {
               error  : profileError
           } = useProfileData();
 
-    const isLoading = activeView === 'github' ? githubLoading : profileLoading;
+    // Handle view changes by navigating to the appropriate route
+    const handleViewChange = (view: ViewType) => {
+        navigate(viewToPath[view]);
+    };
+
+    // Redirect root path to experience
+    useEffect(() => {
+                  if(location.pathname === '/') {
+                      navigate('/experience', {replace: true});
+                  }
+              },
+              [
+                  location.pathname,
+                  navigate
+              ]);
+
+    const isLoading = currentView === 'github' ? githubLoading : profileLoading;
 
     if(isLoading) {
         return <LoadingSpinner darkMode={darkMode}/>;
@@ -99,7 +165,7 @@ const Portfolio: React.FC = () => {
             </div>);
         }
 
-        switch(activeView) {
+        switch(currentView) {
             case 'experience':
                 return <ExperienceView profileData={profileData} darkMode={darkMode}/>;
             case 'education':
@@ -162,13 +228,13 @@ const Portfolio: React.FC = () => {
                 </div>
 
                 <Navigation
-                    activeView={activeView}
-                    onViewChange={setActiveView}
+                    activeView={currentView}
+                    onViewChange={handleViewChange}
                     darkMode={darkMode}
                 />
 
                 <div className="mt-12 mb-12">
-                    {activeView === 'github' ? renderGitHubView() : renderProfileView()}
+                    {currentView === 'github' ? renderGitHubView() : renderProfileView()}
                 </div>
 
                 <ContactSection

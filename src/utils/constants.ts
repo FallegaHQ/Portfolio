@@ -18,5 +18,5 @@ export const THEME_CONFIG = {
 } as const;
 
 export const CONTACT = {
-    SKYPE_CALL_LINK: 'https://call.whatsapp.com/video/L1nOl9rdGXkpC4vC3fEnLW'
+    SKYPE_CALL_LINK: 'https://call.whatsapp.com/audio/L1nOl9rdGXkpC4vC3fEnLW'
 }

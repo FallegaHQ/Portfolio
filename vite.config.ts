@@ -18,11 +18,14 @@ export default defineConfig(({mode}) => {
             {
                 name: 'copy-support-files',
                 writeBundle() {
-                    if(existsSync('src/github-proxy.php')) {
-                        copyFileSync('src/github-proxy.php', 'dist/github-proxy.php');
+                    if(existsSync('public/github-proxy.php')) {
+                        copyFileSync('public/github-proxy.php', 'dist/github-proxy.php');
                     }
-                    if(existsSync('src/profile-data.json')) {
-                        copyFileSync('src/profile-data.json', 'dist/profile-data.json');
+                    if(existsSync('public/profile-data.json')) {
+                        copyFileSync('public/profile-data.json', 'dist/profile-data.json');
+                    }
+                    if(existsSync('public/.htaccess')) {
+                        copyFileSync('public/.htaccess', 'dist/.htaccess');
                     }
                 }
             },

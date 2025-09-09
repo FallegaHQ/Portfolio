@@ -20,12 +20,12 @@ export const StatCard: React.FC<StatCardProps> = ({
             ${darkMode ? 'border-white/10' : 'border-white/30'}
             hover:scale-105 transition-all duration-300 group
         `}>
-            <div className="flex items-center justify-between mb-4">
-                <Icon className="text-blue-500 group-hover:scale-110 transition-transform" size={24}/>
-            </div>
-            <div className="text-3xl font-bold mb-2">{value}</div>
-            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                {label}
-            </div>
-        </div>);
+        <div className="flex items-center justify-between mb-4">
+            <Icon className="text-blue-500 group-hover:scale-110 transition-transform" size={24}/>
+        </div>
+        <div className="text-3xl font-bold mb-2">{value}</div>
+        <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+            {label}
+        </div>
+    </div>);
 };

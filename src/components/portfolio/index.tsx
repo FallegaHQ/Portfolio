@@ -14,9 +14,16 @@ import {ExperienceView} from './ExperienceView.tsx'
 import {EducationView} from './EducationView.tsx'
 import {SkillsView} from './SkillsView.tsx'
 import {ProjectsView} from './ProjectsView.tsx'
+import {usePageMeta} from "@hooks/usePageMeta.tsx";
 
 const Portfolio: React.FC = () => {
-    const [activeView, setActiveView] = useState<ViewType>('github');
+
+    usePageMeta({
+                    title      : "SAKHRAOUI Omar | Softwyx",
+                    description: "This is the landing page where you get to meet me.",
+                    keywords   : "resuma, fallega, fallegahq, dev, fullstack, developer, softwyx"
+                });
+    const [activeView, setActiveView] = useState<ViewType>('experience');
 
     const {
               darkMode,
@@ -45,7 +52,7 @@ const Portfolio: React.FC = () => {
 
     const isLoading = activeView === 'github' ? githubLoading : profileLoading;
 
-    if(isLoading){
+    if(isLoading) {
         return <LoadingSpinner darkMode={darkMode}/>;
     }
 
@@ -79,20 +86,20 @@ const Portfolio: React.FC = () => {
     </>);
 
     const renderProfileView = () => {
-        if(profileError){
+        if(profileError) {
             return (<div className={`text-center py-20 ${darkMode ? 'text-red-400' : 'text-red-600'}`}>
                 <p className="text-xl mb-4">Failed to load profile data</p>
                 <p className="text-sm opacity-75">{profileError}</p>
             </div>);
         }
 
-        if(!profileData){
+        if(!profileData) {
             return (<div className={`text-center py-20 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 <p className="text-xl">No profile data available</p>
             </div>);
         }
 
-        switch(activeView){
+        switch(activeView) {
             case 'experience':
                 return <ExperienceView profileData={profileData} darkMode={darkMode}/>;
             case 'education':

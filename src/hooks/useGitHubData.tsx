@@ -4,21 +4,21 @@ import {cacheService, githubApi} from '@/services';
 import {calculateLanguageStats, getFeaturedRepos, getTotalStars, GITHUB_CONFIG} from '@/utils';
 
 export const useGitHubData = (username: string = GITHUB_CONFIG.USERNAME) => {
-    const [profile, setProfile]                   = useState<GitHubProfile | null>(null);
-    const [repos, setRepos]                       = useState<GitHubRepository[]>([]);
-    const [languages, setLanguages]               = useState<LanguageStats>({});
+    const [profile, setProfile] = useState<GitHubProfile | null>(null);
+    const [repos, setRepos] = useState<GitHubRepository[]>([]);
+    const [languages, setLanguages] = useState<LanguageStats>({});
     const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-    const [showAllRepos, setShowAllRepos]         = useState<boolean>(false);
-    const [loading, setLoading]                   = useState<boolean>(true);
-    const [cachedAvatarUrl, setCachedAvatarUrl]   = useState<string | null>(null);
+    const [showAllRepos, setShowAllRepos] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [cachedAvatarUrl, setCachedAvatarUrl] = useState<string | null>(null);
 
-    const fetchGitHubData = useCallback(async () => {
-        try{
+    const fetchGitHubData = useCallback(async() => {
+        try {
             setLoading(true);
 
             // Check cached avatar first
             const cachedAvatar = cacheService.getCachedAvatar(username);
-            if(cachedAvatar){
+            if(cachedAvatar) {
                 setCachedAvatarUrl(cachedAvatar.url);
             }
 
@@ -32,7 +32,7 @@ export const useGitHubData = (username: string = GITHUB_CONFIG.USERNAME) => {
             setRepos(reposData);
 
             // Update avatar cache if different
-            if(!cachedAvatar || cachedAvatar.url !== profileData.avatar_url){
+            if(!cachedAvatar || cachedAvatar.url !== profileData.avatar_url) {
                 cacheService.setCachedAvatar(username, profileData.avatar_url);
                 setCachedAvatarUrl(profileData.avatar_url);
             }
@@ -41,10 +41,10 @@ export const useGitHubData = (username: string = GITHUB_CONFIG.USERNAME) => {
             setLanguages(langStats);
 
         }
-        catch(error){
+        catch(error) {
             console.error('Error fetching GitHub data:', error);
         }
-        finally{
+        finally {
             setLoading(false);
         }
     }, [username]);
@@ -54,7 +54,7 @@ export const useGitHubData = (username: string = GITHUB_CONFIG.USERNAME) => {
     }, []);
 
     const featuredRepos = getFeaturedRepos(repos, GITHUB_CONFIG.FEATURED_REPOS_LIMIT);
-    const totalStars    = getTotalStars(repos);
+    const totalStars = getTotalStars(repos);
 
     return {
         profile,

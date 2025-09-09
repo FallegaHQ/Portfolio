@@ -3,12 +3,12 @@ import {THEME_CONFIG} from '@/utils';
 
 export const useTheme = () => {
     const [darkMode, setDarkMode] = useState<boolean>(() => {
-        if(typeof window === 'undefined'){
+        if(typeof window === 'undefined') {
             return true;
         }
 
         const saved = localStorage.getItem(THEME_CONFIG.STORAGE_KEY);
-        if(saved){
+        if(saved) {
             return saved === THEME_CONFIG.DARK;
         }
 
@@ -16,17 +16,17 @@ export const useTheme = () => {
     });
 
     useEffect(() => {
-        if(typeof window === 'undefined'){
+        if(typeof window === 'undefined') {
             return;
         }
 
         const theme = darkMode ? THEME_CONFIG.DARK : THEME_CONFIG.LIGHT;
         localStorage.setItem(THEME_CONFIG.STORAGE_KEY, theme);
 
-        if(darkMode){
+        if(darkMode) {
             document.documentElement.classList.add('dark');
         }
-        else{
+        else {
             document.documentElement.classList.remove('dark');
         }
     }, [darkMode]);

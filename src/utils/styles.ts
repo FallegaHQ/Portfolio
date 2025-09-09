@@ -15,7 +15,7 @@ export const getTextStyles = (darkMode: boolean) => ({
 export const getButtonStyles = (variant: 'primary' | 'secondary', darkMode: boolean) => {
     const baseStyles = 'px-6 py-3 rounded-xl transition-colors duration-300 flex items-center gap-2';
 
-    if(variant === 'primary'){
+    if(variant === 'primary') {
         return `${baseStyles} bg-blue-600 hover:bg-blue-700 text-white`;
     }
 

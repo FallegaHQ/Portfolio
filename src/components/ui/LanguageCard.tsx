@@ -37,27 +37,27 @@ export const LanguageCard: React.FC<LanguageCardProps> = ({
     };
 
     return (<button
-            onClick={onClick}
-            className={`
+        onClick={onClick}
+        className={`
                 w-full p-4 rounded-xl border transition-all duration-300 
                 hover:scale-105 group text-left
                 ${darkMode ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-white/50 border-white/30 hover:bg-white/70'}
             `}
-        >
-            <div className="flex items-center justify-between mb-2">
-                <div
-                    className="w-4 h-4 rounded-full border-2 border-white/50"
-                    style={{backgroundColor: getLanguageColor(language)}}
-                />
-                <span className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+    >
+        <div className="flex items-center justify-between mb-2">
+            <div
+                className="w-4 h-4 rounded-full border-2 border-white/50"
+                style={{backgroundColor: getLanguageColor(language)}}
+            />
+            <span className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {count}
                 </span>
-            </div>
-            <div className="font-medium group-hover:text-blue-500 transition-colors">
-                {language}
-            </div>
-            <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                {count === 1 ? 'repository' : 'repositories'}
-            </div>
-        </button>);
+        </div>
+        <div className="font-medium group-hover:text-blue-500 transition-colors">
+            {language}
+        </div>
+        <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+            {count === 1 ? 'repository' : 'repositories'}
+        </div>
+    </button>);
 };

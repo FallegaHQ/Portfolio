@@ -6,13 +6,13 @@ export const useResponsiveText = (text: string): string => {
 
     let maxLength: number;
 
-    if(isMobile){
+    if(isMobile) {
         maxLength = 18;
     }
-    else if(isTablet){
+    else if(isTablet) {
         maxLength = 60;
     }
-    else{
+    else {
         maxLength = Infinity;
     }
 

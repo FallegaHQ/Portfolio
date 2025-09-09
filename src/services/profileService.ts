@@ -3,28 +3,28 @@ import type {ProfileData} from '@/types';
 class ProfileService {
     private profileData: ProfileData | null = null;
 
-    async loadProfileData(): Promise<ProfileData>{
-        if(this.profileData){
+    async loadProfileData(): Promise<ProfileData> {
+        if(this.profileData) {
             return this.profileData;
         }
 
-        try{
+        try {
             const response = await fetch('/profile-data.json');
-            if(!response.ok){
+            if(!response.ok) {
                 return this.getFallbackProfileData();
             }
             this.profileData = await response.json();
             return this.profileData as ProfileData;
         }
-        catch(error){
+        catch(error) {
             console.warn('Failed to load profile data from file, using fallback:', error);
             return this.getFallbackProfileData();
         }
     }
 
-    getSkillsByCategory(skills: ProfileData['skills']){
+    getSkillsByCategory(skills: ProfileData['skills']) {
         const categories = skills.reduce((acc, skill) => {
-            if(!acc[skill.category]){
+            if(!acc[skill.category]) {
                 acc[skill.category] = [];
             }
             acc[skill.category].push(skill);
@@ -40,13 +40,13 @@ class ProfileService {
         return categories;
     }
 
-    formatDateRange(startDate: string, endDate?: string): string{
+    formatDateRange(startDate: string, endDate?: string): string {
         const start = new Date(startDate).toLocaleDateString('en-US', {
             year : 'numeric',
             month: 'short'
         });
 
-        if(!endDate){
+        if(!endDate) {
             return `${start} - Present`;
         }
 
@@ -58,22 +58,22 @@ class ProfileService {
         return `${start} - ${end}`;
     }
 
-    calculateDuration(startDate: string, endDate?: string): string{
+    calculateDuration(startDate: string, endDate?: string): string {
         const start = new Date(startDate);
-        const end   = endDate ? new Date(endDate) : new Date();
+        const end = endDate ? new Date(endDate) : new Date();
 
         const diffTime = Math.abs(end.getTime() - start.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        const years    = Math.floor(diffDays / 365);
-        const months   = Math.floor((diffDays % 365) / 30);
+        const years = Math.floor(diffDays / 365);
+        const months = Math.floor((diffDays % 365) / 30);
 
-        if(years > 0){
+        if(years > 0) {
             return months > 0 ? `${years}y ${months}m` : `${years}y`;
         }
         return `${months}m`;
     }
 
-    private getFallbackProfileData(): ProfileData{
+    private getFallbackProfileData(): ProfileData {
         return {
             "personalInfo"  : {
                 "fullName": "SAKHRAOUI Omar",

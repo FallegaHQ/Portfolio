@@ -2,17 +2,16 @@ import React from 'react'
 import type {Skill} from '@/types'
 
 export const SkillCard: React.FC<{
-    skill: Skill;
-    darkMode: boolean
+    skill: Skill; darkMode: boolean
 }> = ({
           skill,
           darkMode
       }) => {
     const getProficiencyColor = (level: number) => {
-        if(level >= 4){
+        if(level >= 4) {
             return 'green';
         }
-        if(level >= 3){
+        if(level >= 3) {
             return 'blue';
         }
         return 'yellow';

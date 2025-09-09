@@ -1,7 +1,6 @@
 import React from 'react';
 import {Book, Star, Users} from 'lucide-react';
-import type {GitHubProfile} from '@/types';
-import type {GitHubRepository} from '@/types';
+import type {GitHubProfile, GitHubRepository} from '@/types';
 import {StatCard} from '@/components/ui';
 
 interface StatsCardsProps {

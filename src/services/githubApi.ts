@@ -1,4 +1,4 @@
-import type {GitHubProfile, GitHubRepository} from '@/types';
+import type {GitHubEvent, GitHubProfile, GitHubRepository} from '@/types';
 
 class GitHubApiService {
     private readonly proxyUrl = 'https://softwyx.com/github-proxy.php';
@@ -17,6 +17,37 @@ class GitHubApiService {
 
     async getRepositoryLanguages(username: string, repoName: string): Promise<Record<string, number>> {
         return this.makeRequest<Record<string, number>>(`repos/${username}/${repoName}/languages`);
+    }
+
+    async getPublicEvents(username: string): Promise<GitHubEvent[]> {
+        return this.makeRequest<GitHubEvent[]>(`users/${username}/events/public`);
+    }
+
+    async getEvents(username: string): Promise<GitHubEvent[]> {
+        return this.makeRequest<GitHubEvent[]>(`users/${username}/events`);
+    }
+
+    async graphql<T>(query: string, variables?: Record<string, unknown>): Promise<T> {
+        const response = await fetch(`${this.proxyUrl}?endpoint=${encodeURIComponent('graphql')}`,
+                                     {
+                                         method : 'POST',
+                                         headers: {
+                                             'Content-Type': 'application/json'
+                                         },
+                                         body   : JSON.stringify({query, variables})
+                                     });
+
+        if(!response.ok) {
+            let errorMessage = `Failed to fetch from GitHub API: ${response.status}`;
+            const errorData = await response.json();
+            if(errorData.error) {
+                errorMessage = errorData.error;
+                throw new Error(errorMessage);
+            }
+            throw new Error(errorMessage);
+        }
+
+        return response.json();
     }
 
     private async makeRequest<T>(endpoint: string): Promise<T> {

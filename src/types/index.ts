@@ -1,5 +1,6 @@
 export type {CachedAvatar} from './CachedAvatar';
 export type {Education} from './Education';
+export type {GitHubEvent} from './GitHubEvent';
 export type {GitHubProfile} from './GitHubProfile';
 export type  {GitHubRepository} from './GitHubRepository';
 export type {LanguageStats} from './LanguageStats';

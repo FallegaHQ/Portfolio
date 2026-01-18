@@ -8,6 +8,7 @@ import {ThemeToggle} from './ThemeToggle';
 import {LoadingSpinner} from './LoadingSpinner';
 import {HeroSection} from './HeroSection';
 import {StatsCards} from './StatsCards';
+import {ActivitySection} from './ActivitySection';
 import {LanguagesSection} from './LanguagesSection';
 import {ProjectsSection} from './ProjectsSection';
 import {ContactSection} from './ContactSection';
@@ -213,6 +214,7 @@ const Portfolio: React.FC = () => {
     const {
               profile,
               repos,
+              events,
               featuredRepos,
               languages,
               loading: githubLoading,
@@ -259,6 +261,12 @@ const Portfolio: React.FC = () => {
         <LanguagesSection
             languages={languages}
             onLanguageSelect={setSelectedLanguage}
+            darkMode={darkMode}
+        />
+
+        <ActivitySection
+            username={GITHUB_CONFIG.USERNAME}
+            events={events}
             darkMode={darkMode}
         />
 

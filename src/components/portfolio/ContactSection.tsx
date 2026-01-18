@@ -25,7 +25,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 href={`https://github.com/${username}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-gray-900 hover:bg-gray-800 text-white rounded-xl transition-colors duration-300 flex items-center gap-2"
+                aria-label="Open GitHub profile (opens in a new tab)"
+                className={`px-6 py-3 bg-gray-900 hover:bg-gray-800 text-white rounded-xl transition-colors duration-300 flex items-center gap-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-300 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}`}
             >
                 <Github size={20}/>
                 GitHub
@@ -34,7 +35,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 href={profile.blog}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors duration-300 flex items-center gap-2"
+                aria-label="Open website (opens in a new tab)"
+                className={`px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors duration-300 flex items-center gap-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}`}
             >
                 <ExternalLink size={20}/>
                 Website
@@ -43,7 +45,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 href={CONTACT.WHATSAPP_CHAT_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 flex items-center gap-2"
+                aria-label="Open WhatsApp chat (opens in a new tab)"
+                className={`px-6 py-3 bg-green-800 hover:bg-green-900 text-white rounded-xl transition-colors duration-300 flex items-center gap-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}`}
             >
                 <Phone size={20}/>
                 WhatsApp Chat
@@ -52,7 +55,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 href={CONTACT.WHATSAPP_CALL_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 flex items-center gap-2"
+                aria-label="Open WhatsApp call link (opens in a new tab)"
+                className={`px-6 py-3 bg-green-800 hover:bg-green-900 text-white rounded-xl transition-colors duration-300 flex items-center gap-2 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}`}
             >
                 <Phone size={20}/>
                 WhatsApp Call

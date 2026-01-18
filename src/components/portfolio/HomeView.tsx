@@ -62,7 +62,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
                         href={CONTACT.WHATSAPP_CHAT_LINK}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 text-center"
+                        aria-label="Open WhatsApp to chat or call (opens in a new tab)"
+                        className={`px-6 py-3 bg-green-800 hover:bg-green-900 text-white rounded-xl transition-colors duration-300 text-center focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}`}
                     >
                         WhatsApp (chat / call)
                     </a>
@@ -86,7 +87,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
                         href={CONTACT.WHATSAPP_CHAT_LINK}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 text-center"
+                        aria-label="Open WhatsApp to chat or call (opens in a new tab)"
+                        className={`px-6 py-3 bg-green-800 hover:bg-green-900 text-white rounded-xl transition-colors duration-300 text-center focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}`}
                     >
                         WhatsApp (chat / call)
                     </a>
@@ -107,13 +109,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
                         href={CONTACT.WHATSAPP_CHAT_LINK}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 text-center"
+                        aria-label="Open WhatsApp to chat or call (opens in a new tab)"
+                        className={`px-6 py-3 bg-green-800 hover:bg-green-900 text-white rounded-xl transition-colors duration-300 text-center focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}`}
                     >
                         WhatsApp (chat / call)
                     </a>
                     <a
                         href={`mailto:${profileData.personalInfo.email}`}
-                        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors duration-300 text-center"
+                        aria-label="Send an email"
+                        className={`px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors duration-300 text-center focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}`}
                     >
                         Email
                     </a>

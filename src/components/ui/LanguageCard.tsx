@@ -38,9 +38,11 @@ export const LanguageCard: React.FC<LanguageCardProps> = ({
 
     return (<button
         onClick={onClick}
+        aria-label={`Show ${language} projects`}
         className={`
                 w-full p-4 rounded-xl border transition-all duration-300 
                 hover:scale-105 group text-left
+                focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}
                 ${darkMode ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-white/50 border-white/30 hover:bg-white/70'}
             `}
     >

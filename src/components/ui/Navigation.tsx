@@ -62,35 +62,41 @@ export const Navigation: React.FC<NavigationProps> = ({
                                                       }) => {
     const location = useLocation();
 
-    return (<nav className={`sticky top-6 z-30 mx-auto max-w-4xl mb-8`}>
+    return (<nav aria-label="Primary" className={`sticky top-6 z-30 mx-auto max-w-4xl mb-8`}>
             <div className={`
                 ${darkMode ? 'bg-white/10' : 'bg-white/80'} 
                 backdrop-blur-xl rounded-2xl p-2 border 
                 ${darkMode ? 'border-white/20' : 'border-white/30'}
             `}>
-                <div className="flex flex-wrap justify-center gap-1">
+                <ul className="flex flex-wrap justify-center gap-1" role="list">
                     {navItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = item.id === 'home'
                             ? location.pathname === '/' || location.pathname === item.path
                             : location.pathname === item.path;
 
-                        return (<Link
-                                key={item.id}
+                        return (<li key={item.id}>
+                            <Link
                                 to={item.path}
                                 onClick={() => onViewChange(item.id)}
+                                aria-current={isActive ? 'page' : undefined}
+                                aria-label={item.label}
                                 className={`
                                     px-4 py-3 rounded-xl transition-all duration-300 
                                     flex items-center gap-2 text-sm font-medium
                                     no-underline
+                                    focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500
+                                    ${darkMode ? 'focus-visible:ring-offset-gray-950' : 'focus-visible:ring-offset-white'}
                                     ${isActive ? darkMode ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25' : 'bg-blue-600 text-white shadow-lg shadow-blue-600/25' : darkMode ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'}
                                 `}
                             >
-                                <Icon size={18}/>
+                                <Icon size={18} aria-hidden="true"/>
                                 <span className="hidden sm:inline">{item.label}</span>
-                            </Link>);
+                                <span className="sr-only">{item.label}{isActive ? ' (current page)' : ''}</span>
+                            </Link>
+                        </li>);
                     })}
-                </div>
+                </ul>
             </div>
         </nav>);
 };

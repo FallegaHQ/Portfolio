@@ -309,7 +309,7 @@ const Portfolio: React.FC = () => {
             <div className="absolute inset-0 bg-linear-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20"/>
 
             <div className="relative max-w-6xl mx-auto px-6 py-20">
-                <div className="text-center mb-8">
+                <header className="text-center mb-8">
                     <div className="relative inline-block mb-6">
                         <div className={`
                                 w-32 h-32 rounded-full border-4 overflow-hidden
@@ -344,23 +344,25 @@ const Portfolio: React.FC = () => {
                         onViewChange={handleViewChange}
                         darkMode={darkMode}
                     />
-                </div>
+                </header>
 
-                <div className="mt-12 mb-12">
+                <main id="main-content" className="mt-12 mb-12">
                     {activeView === 'github' ? renderGitHubView() : renderProfileView()}
-                </div>
+                </main>
 
-                <ContactSection
-                    username={GITHUB_CONFIG.USERNAME}
-                    profile={profile}
-                    darkMode={darkMode}
-                />
+                <footer>
+                    <ContactSection
+                        username={GITHUB_CONFIG.USERNAME}
+                        profile={profile}
+                        darkMode={darkMode}
+                    />
 
-                <div className={`mt-12 text-center text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                    <p>
-                        © {new Date().getFullYear()} {profileData?.personalInfo.fullName || profile?.name || GITHUB_CONFIG.USERNAME} · v{__APP_VERSION__}
-                    </p>
-                </div>
+                    <div className={`mt-12 text-center text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <p>
+                            © {new Date().getFullYear()} {profileData?.personalInfo.fullName || profile?.name || GITHUB_CONFIG.USERNAME} · v{__APP_VERSION__}
+                        </p>
+                    </div>
+                </footer>
             </div>
         </div>
 

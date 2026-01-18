@@ -20,7 +20,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
             Interested in collaborating or have a project in mind? Let's build something amazing together!
         </p>
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-4 flex-wrap">
             <a
                 href={`https://github.com/${username}`}
                 target="_blank"
@@ -40,13 +40,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 Website
             </a>)}
             <a
-                href={CONTACT.SKYPE_CALL_LINK}
+                href={CONTACT.WHATSAPP_CHAT_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-green-500 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 flex items-center gap-2"
+                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 flex items-center gap-2"
             >
                 <Phone size={20}/>
-                Call me now!
+                WhatsApp Chat
+            </a>
+            <a
+                href={CONTACT.WHATSAPP_CALL_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl transition-colors duration-300 flex items-center gap-2"
+            >
+                <Phone size={20}/>
+                WhatsApp Call
             </a>
         </div>
     </div>);

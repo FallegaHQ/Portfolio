@@ -18,6 +18,7 @@ export function seoFilesPlugin(): Plugin {
             const lastmod = new Date().toISOString().split("T")[0];
             const routes = [
                 "/",
+                "/home",
                 "/experience",
                 "/education",
                 "/skills",
@@ -28,6 +29,7 @@ export function seoFilesPlugin(): Plugin {
             // === Generate sitemap.xml ===
             const changefreqByRoute: Record<string, string> = {
                 "/"          : "monthly",
+                "/home"      : "monthly",
                 "/experience": "monthly",
                 "/education" : "yearly",
                 "/skills"    : "weekly",
@@ -37,6 +39,7 @@ export function seoFilesPlugin(): Plugin {
 
             const priorityByRoute: Record<string, string> = {
                 "/"          : "1.0",
+                "/home"      : "1.0",
                 "/experience": "1.0",
                 "/education" : "0.6",
                 "/skills"    : "0.8",

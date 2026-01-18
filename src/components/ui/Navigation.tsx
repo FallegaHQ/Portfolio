@@ -1,8 +1,8 @@
 import React from 'react';
-import {Briefcase, Code, FolderOpen, Github, GraduationCap} from 'lucide-react';
+import {Briefcase, Code, FolderOpen, Github, GraduationCap, Home} from 'lucide-react';
 import {Link, useLocation} from 'react-router-dom';
 
-export type ViewType = 'github' | 'experience' | 'education' | 'skills' | 'projects';
+export type ViewType = 'home' | 'github' | 'experience' | 'education' | 'skills' | 'projects';
 
 interface NavigationProps {
     activeView: ViewType;
@@ -18,6 +18,12 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+    {
+        id   : 'home',
+        label: 'Home',
+        icon : Home,
+        path : '/home'
+    },
     {
         id   : 'experience',
         label: 'Experience',
@@ -65,7 +71,9 @@ export const Navigation: React.FC<NavigationProps> = ({
                 <div className="flex flex-wrap justify-center gap-1">
                     {navItems.map((item) => {
                         const Icon = item.icon;
-                        const isActive = location.pathname === item.path;
+                        const isActive = item.id === 'home'
+                            ? location.pathname === '/' || location.pathname === item.path
+                            : location.pathname === item.path;
 
                         return (<Link
                                 key={item.id}

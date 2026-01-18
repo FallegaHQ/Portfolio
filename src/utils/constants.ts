@@ -18,5 +18,6 @@ export const THEME_CONFIG = {
 } as const;
 
 export const CONTACT = {
-    SKYPE_CALL_LINK: 'https://call.whatsapp.com/video/L1nOl9rdGXkpC4vC3fEnLW'
+    WHATSAPP_CHAT_LINK: 'http://wa.me/21627161321',
+    WHATSAPP_CALL_LINK: 'https://call.whatsapp.com/voice/UryBRaipMSVjDV6Kk7HtWs',
 }

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useGitHubData, useProfileData, useTheme} from '@/hooks';
 import {Navigation, type ViewType} from '@/components/ui/Navigation';
@@ -15,12 +15,14 @@ import {ExperienceView} from './ExperienceView.tsx'
 import {EducationView} from './EducationView.tsx'
 import {SkillsView} from './SkillsView.tsx'
 import {ProjectsView} from './ProjectsView.tsx'
+import {HomeView} from './HomeView.tsx'
 import {usePageMeta} from "@hooks/usePageMeta.tsx";
 import {useAnalytics} from "@hooks/useAnalytics";
 
 // Map URL paths to ViewType
 const pathToView: Record<string, ViewType> = {
-    '/'          : 'experience',
+    '/'          : 'home',
+    '/home'      : 'home',
     '/experience': 'experience',
     '/education' : 'education',
     '/skills'    : 'skills',
@@ -30,6 +32,7 @@ const pathToView: Record<string, ViewType> = {
 
 // Map ViewType to URL paths
 const viewToPath: Record<ViewType, string> = {
+    'home'      : '/home',
     'experience': '/experience',
     'education' : '/education',
     'skills'    : '/skills',
@@ -41,6 +44,28 @@ const viewToPath: Record<ViewType, string> = {
 const SITE_URL = "https://softwyx.com";
 
 const viewMetadata: Record<ViewType, { title: string; description: string; keywords: string; canonical: string; jsonLd: string; [key: string]: string }> = {
+    home      : {
+        title      : "Hire Me | SAKHRAOUI Omar | Softwyx",
+        description: "Hire SAKHRAOUI Omar for freelance projects or full-time roles. Laravel, Symfony, React, Angular.",
+        keywords   : "hire, freelance, full time, laravel, symfony, react, angular, senior full stack developer",
+        canonical  : `${SITE_URL}/`,
+        "og:type"        : "website",
+        "og:site_name"   : "Softwyx",
+        "og:title"       : "Hire Me | SAKHRAOUI Omar | Softwyx",
+        "og:description" : "Hire SAKHRAOUI Omar for freelance projects or full-time roles. Laravel, Symfony, React, Angular.",
+        "og:url"         : `${SITE_URL}/`,
+        "og:image"       : `${SITE_URL}/og-image.png`,
+        "twitter:card"        : "summary_large_image",
+        "twitter:title"       : "Hire Me | SAKHRAOUI Omar | Softwyx",
+        "twitter:description" : "Hire SAKHRAOUI Omar for freelance projects or full-time roles. Laravel, Symfony, React, Angular.",
+        "twitter:image"       : `${SITE_URL}/og-image.png`,
+        jsonLd: JSON.stringify({
+                                  "@context": "https://schema.org",
+                                  "@type"   : "WebPage",
+                                  name      : "Hire Me",
+                                  url       : `${SITE_URL}/`
+                              })
+    },
     experience: {
         title      : "Experience | SAKHRAOUI Omar | Softwyx",
         description: "Professional experience and career journey of SAKHRAOUI Omar, fullstack developer at Softwyx.",
@@ -164,18 +189,26 @@ const Portfolio: React.FC = () => {
 
     useAnalytics({measurementId: "G-X2H21DGQJB"});
 
-    // Determine current view from URL
-    const currentView = pathToView[location.pathname] || 'experience';
+    // Determine initial view from URL (used once). After that, meta follows activeView.
+    const initialView = pathToView[location.pathname] || 'home';
+    const [activeView, setActiveView] = useState<ViewType>(initialView);
 
-    // Set page metadata based on current view
-    usePageMeta(viewMetadata[currentView]);
+    // Keep activeView in sync when user navigates via browser back/forward.
+    useEffect(() => {
+                  const viewFromUrl = pathToView[location.pathname] || 'home';
+                  setActiveView(viewFromUrl);
+              },
+              [location.pathname]);
+
+    // Set page metadata based on active tab, not raw URL.
+    usePageMeta(viewMetadata[activeView]);
 
     const {
               darkMode,
               toggleTheme
           } = useTheme();
 
-    const githubEnabled = currentView === 'github';
+    const githubEnabled = activeView === 'github';
 
     const {
               profile,
@@ -198,21 +231,13 @@ const Portfolio: React.FC = () => {
 
     // Handle view changes by navigating to the appropriate route
     const handleViewChange = (view: ViewType) => {
+        setActiveView(view);
         navigate(viewToPath[view]);
     };
 
-    // Redirect root path to experience
-    useEffect(() => {
-                  if(location.pathname === '/') {
-                      navigate('/experience', {replace: true});
-                  }
-              },
-              [
-                  location.pathname,
-                  navigate
-              ]);
 
-    const isLoading = currentView === 'github' ? githubLoading : profileLoading;
+
+    const isLoading = activeView === 'github' ? githubLoading : profileLoading;
 
     if(isLoading) {
         return <LoadingSpinner darkMode={darkMode}/>;
@@ -260,7 +285,9 @@ const Portfolio: React.FC = () => {
             </div>);
         }
 
-        switch(currentView) {
+        switch(activeView) {
+            case 'home':
+                return <HomeView profileData={profileData} darkMode={darkMode}/>;
             case 'experience':
                 return <ExperienceView profileData={profileData} darkMode={darkMode}/>;
             case 'education':
@@ -312,25 +339,15 @@ const Portfolio: React.FC = () => {
                         {profileData?.personalInfo.title || profile?.bio || 'Passionate Developer & Problem Solver'}
                     </p>
 
-                    <div className="prose prose-lg max-w-3xl mx-auto">
-                        <div
-                            className={`${darkMode ? 'bg-white/5' : 'bg-white/50'} backdrop-blur-xl rounded-2xl p-6 border ${darkMode ? 'border-white/10' : 'border-white/30'}`}>
-                            <h3 className="text-xl font-semibold mb-4">About Me</h3>
-                            <p className={darkMode ? 'text-gray-300' : 'text-gray-700'}>
-                                {profileData?.personalInfo.summary}
-                            </p>
-                        </div>
-                    </div>
+                    <Navigation
+                        activeView={activeView}
+                        onViewChange={handleViewChange}
+                        darkMode={darkMode}
+                    />
                 </div>
 
-                <Navigation
-                    activeView={currentView}
-                    onViewChange={handleViewChange}
-                    darkMode={darkMode}
-                />
-
                 <div className="mt-12 mb-12">
-                    {currentView === 'github' ? renderGitHubView() : renderProfileView()}
+                    {activeView === 'github' ? renderGitHubView() : renderProfileView()}
                 </div>
 
                 <ContactSection

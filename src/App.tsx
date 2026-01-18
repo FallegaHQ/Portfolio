@@ -5,6 +5,7 @@ import Portfolio from '@components/portfolio';
 const App: React.FC = () => {
     return (<Routes>
         <Route path="/" element={<Portfolio/>}/>
+        <Route path="/home" element={<Portfolio/>}/>
         <Route path="/experience" element={<Portfolio/>}/>
         <Route path="/education" element={<Portfolio/>}/>
         <Route path="/skills" element={<Portfolio/>}/>

@@ -175,19 +175,20 @@ const Portfolio: React.FC = () => {
               toggleTheme
           } = useTheme();
 
+    const githubEnabled = currentView === 'github';
+
     const {
               profile,
               repos,
               featuredRepos,
               languages,
               loading: githubLoading,
-              cachedAvatarUrl,
               selectedLanguage,
               setSelectedLanguage,
               showAllRepos,
               setShowAllRepos,
               totalStars
-          } = useGitHubData(GITHUB_CONFIG.USERNAME);
+          } = useGitHubData(GITHUB_CONFIG.USERNAME, githubEnabled);
 
     const {
               profileData,
@@ -220,7 +221,6 @@ const Portfolio: React.FC = () => {
     const renderGitHubView = () => (<>
         <HeroSection
             profile={profile}
-            cachedAvatarUrl={cachedAvatarUrl}
             darkMode={darkMode}
         />
 
@@ -289,15 +289,16 @@ const Portfolio: React.FC = () => {
                                 ${darkMode ? 'border-white/20' : 'border-white/30'}
                                 bg-linear-to-br from-blue-500 to-purple-600
                             `}>
-                            {cachedAvatarUrl ? (<img
-                                src={cachedAvatarUrl}
+                            <img
+                                src="/ms-icon-310x310.png"
                                 alt="Profile"
+                                width={128}
+                                height={128}
+                                loading="eager"
+                                fetchPriority="high"
+                                decoding="async"
                                 className="w-full h-full object-cover"
-                            />) : (<div
-                                className="w-full h-full flex items-center justify-center text-white text-4xl font-bold">
-                                {(profile?.name || GITHUB_CONFIG.USERNAME).charAt(0)
-                                                                          .toUpperCase()}
-                            </div>)}
+                            />
                         </div>
                         <div
                             className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white"/>
@@ -337,6 +338,12 @@ const Portfolio: React.FC = () => {
                     profile={profile}
                     darkMode={darkMode}
                 />
+
+                <div className={`mt-12 text-center text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <p>
+                        © {new Date().getFullYear()} {profileData?.personalInfo.fullName || profile?.name || GITHUB_CONFIG.USERNAME} · v{__APP_VERSION__}
+                    </p>
+                </div>
             </div>
         </div>
 

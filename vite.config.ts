@@ -57,12 +57,6 @@ export default defineConfig(({mode}) => {
                             'react-dom'
                         ],
                         'router'      : ['react-router-dom'],
-                        'tailwindcss'    : ['tailwindcss'],
-
-                        // Utility chunks
-                        'utils': [
-                            'date-fns'
-                        ],
                     },
 
                     // Optimize file names for caching

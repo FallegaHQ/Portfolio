@@ -43,6 +43,24 @@
     Header always set X-Frame-Options DENY
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Cache hashed build assets aggressively
+    <FilesMatch "^.*\.(?:js|css|mjs)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    <FilesMatch "^.*\.(?:png|jpg|jpeg|gif|webp|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    <FilesMatch "^.*\.(?:woff|woff2|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Do not cache HTML (so deploys update instantly)
+    <FilesMatch "^.*\.html$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
 </IfModule>
 
 # Optional: Enable GZIP compression for better performance

@@ -33,12 +33,20 @@
     <meta name="twitter:title" content="SAKHRAOUI Omar | Softwyx" />
     <meta name="twitter:description" content="Senior Full-Stack Developer portfolio of SAKHRAOUI Omar (Softwyx)." />
     <meta name="twitter:image" content="https://softwyx.com/og-image.png" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X2H21DGQJB"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-X2H21DGQJB');
+
+      window.addEventListener('load', function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-X2H21DGQJB';
+        s.onload = function () {
+          gtag('config', 'G-X2H21DGQJB');
+        };
+        document.head.appendChild(s);
+      });
     </script>
     <title>SAKHRAOUI Omar | Softwyx</title>
   </head>

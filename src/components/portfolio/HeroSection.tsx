@@ -5,7 +5,6 @@ import {GITHUB_CONFIG} from '@/utils'
 
 interface HeroSectionProps {
     profile: GitHubProfile | null;
-    cachedAvatarUrl: string | null;
     darkMode: boolean;
 }
 

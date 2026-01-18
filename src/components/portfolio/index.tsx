@@ -16,6 +16,7 @@ import {EducationView} from './EducationView.tsx'
 import {SkillsView} from './SkillsView.tsx'
 import {ProjectsView} from './ProjectsView.tsx'
 import {usePageMeta} from "@hooks/usePageMeta.tsx";
+import {useAnalytics} from "@hooks/useAnalytics";
 
 // Map URL paths to ViewType
 const pathToView: Record<string, ViewType> = {
@@ -37,37 +38,131 @@ const viewToPath: Record<ViewType, string> = {
 };
 
 // Page metadata for each view
-const viewMetadata: Record<ViewType, { title: string; description: string; keywords: string }> = {
+const SITE_URL = "https://softwyx.com";
+
+const viewMetadata: Record<ViewType, { title: string; description: string; keywords: string; canonical: string; jsonLd: string; [key: string]: string }> = {
     experience: {
         title      : "Experience | SAKHRAOUI Omar | Softwyx",
         description: "Professional experience and career journey of SAKHRAOUI Omar, fullstack developer at Softwyx.",
-        keywords   : "experience, career, fullstack developer, softwyx, work history"
+        keywords   : "experience, career, fullstack developer, softwyx, work history",
+        canonical  : `${SITE_URL}/experience`,
+        "og:type"        : "website",
+        "og:site_name"   : "Softwyx",
+        "og:title"       : "Experience | SAKHRAOUI Omar | Softwyx",
+        "og:description" : "Professional experience and career journey of SAKHRAOUI Omar, fullstack developer at Softwyx.",
+        "og:url"         : `${SITE_URL}/experience`,
+        "og:image"       : `${SITE_URL}/og-image.png`,
+        "twitter:card"        : "summary_large_image",
+        "twitter:title"       : "Experience | SAKHRAOUI Omar | Softwyx",
+        "twitter:description" : "Professional experience and career journey of SAKHRAOUI Omar, fullstack developer at Softwyx.",
+        "twitter:image"       : `${SITE_URL}/og-image.png`,
+        jsonLd: JSON.stringify({
+                                  "@context": "https://schema.org",
+                                  "@type"   : "Person",
+                                  name      : "SAKHRAOUI Omar",
+                                  url       : SITE_URL,
+                                  jobTitle  : "Senior Full-Stack Developer",
+                                  email     : "contact@softwyx.com",
+                                  sameAs    : [
+                                      "https://github.com/FallegaHQ"
+                                  ]
+                              })
     },
     education : {
         title      : "Education | SAKHRAOUI Omar | Softwyx",
         description: "Educational background and qualifications of SAKHRAOUI Omar.",
-        keywords   : "education, qualifications, degrees, certificates, learning"
+        keywords   : "education, qualifications, degrees, certificates, learning",
+        canonical  : `${SITE_URL}/education`,
+        "og:type"        : "website",
+        "og:site_name"   : "Softwyx",
+        "og:title"       : "Education | SAKHRAOUI Omar | Softwyx",
+        "og:description" : "Educational background and qualifications of SAKHRAOUI Omar.",
+        "og:url"         : `${SITE_URL}/education`,
+        "og:image"       : `${SITE_URL}/og-image.png`,
+        "twitter:card"        : "summary_large_image",
+        "twitter:title"       : "Education | SAKHRAOUI Omar | Softwyx",
+        "twitter:description" : "Educational background and qualifications of SAKHRAOUI Omar.",
+        "twitter:image"       : `${SITE_URL}/og-image.png`,
+        jsonLd: JSON.stringify({
+                                  "@context": "https://schema.org",
+                                  "@type"   : "WebPage",
+                                  name      : "Education",
+                                  url       : `${SITE_URL}/education`
+                              })
     },
     skills    : {
         title      : "Skills | SAKHRAOUI Omar | Softwyx",
         description: "Technical skills and expertise of SAKHRAOUI Omar in software development.",
-        keywords   : "skills, programming, technologies, expertise, development"
+        keywords   : "skills, programming, technologies, expertise, development",
+        canonical  : `${SITE_URL}/skills`,
+        "og:type"        : "website",
+        "og:site_name"   : "Softwyx",
+        "og:title"       : "Skills | SAKHRAOUI Omar | Softwyx",
+        "og:description" : "Technical skills and expertise of SAKHRAOUI Omar in software development.",
+        "og:url"         : `${SITE_URL}/skills`,
+        "og:image"       : `${SITE_URL}/og-image.png`,
+        "twitter:card"        : "summary_large_image",
+        "twitter:title"       : "Skills | SAKHRAOUI Omar | Softwyx",
+        "twitter:description" : "Technical skills and expertise of SAKHRAOUI Omar in software development.",
+        "twitter:image"       : `${SITE_URL}/og-image.png`,
+        jsonLd: JSON.stringify({
+                                  "@context": "https://schema.org",
+                                  "@type"   : "WebPage",
+                                  name      : "Skills",
+                                  url       : `${SITE_URL}/skills`
+                              })
     },
     projects  : {
         title      : "Projects | SAKHRAOUI Omar | Softwyx",
         description: "Portfolio projects and work samples by SAKHRAOUI Omar.",
-        keywords   : "projects, portfolio, work samples, development projects"
+        keywords   : "projects, portfolio, work samples, development projects",
+        canonical  : `${SITE_URL}/projects`,
+        "og:type"        : "website",
+        "og:site_name"   : "Softwyx",
+        "og:title"       : "Projects | SAKHRAOUI Omar | Softwyx",
+        "og:description" : "Portfolio projects and work samples by SAKHRAOUI Omar.",
+        "og:url"         : `${SITE_URL}/projects`,
+        "og:image"       : `${SITE_URL}/og-image.png`,
+        "twitter:card"        : "summary_large_image",
+        "twitter:title"       : "Projects | SAKHRAOUI Omar | Softwyx",
+        "twitter:description" : "Portfolio projects and work samples by SAKHRAOUI Omar.",
+        "twitter:image"       : `${SITE_URL}/og-image.png`,
+        jsonLd: JSON.stringify({
+                                  "@context": "https://schema.org",
+                                  "@type"   : "WebPage",
+                                  name      : "Projects",
+                                  url       : `${SITE_URL}/projects`
+                              })
     },
     github    : {
         title      : "GitHub Profile | SAKHRAOUI Omar | Softwyx",
         description: "GitHub profile and open source contributions of SAKHRAOUI Omar.",
-        keywords   : "github, open source, repositories, code, contributions"
+        keywords   : "github, open source, repositories, code, contributions",
+        canonical  : `${SITE_URL}/github`,
+        "og:type"        : "website",
+        "og:site_name"   : "Softwyx",
+        "og:title"       : "GitHub Profile | SAKHRAOUI Omar | Softwyx",
+        "og:description" : "GitHub profile and open source contributions of SAKHRAOUI Omar.",
+        "og:url"         : `${SITE_URL}/github`,
+        "og:image"       : `${SITE_URL}/og-image.png`,
+        "twitter:card"        : "summary_large_image",
+        "twitter:title"       : "GitHub Profile | SAKHRAOUI Omar | Softwyx",
+        "twitter:description" : "GitHub profile and open source contributions of SAKHRAOUI Omar.",
+        "twitter:image"       : `${SITE_URL}/og-image.png`,
+        jsonLd: JSON.stringify({
+                                  "@context": "https://schema.org",
+                                  "@type"   : "WebPage",
+                                  name      : "GitHub",
+                                  url       : `${SITE_URL}/github`
+                              })
     }
 };
 
 const Portfolio: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    useAnalytics({measurementId: "G-X2H21DGQJB"});
 
     // Determine current view from URL
     const currentView = pathToView[location.pathname] || 'experience';

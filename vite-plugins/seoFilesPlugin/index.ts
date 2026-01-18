@@ -14,39 +14,47 @@ export function seoFilesPlugin(): Plugin {
                 mkdirSync(outDir, { recursive: true });
             }
 
+            const siteUrl = process.env.SITE_URL || "https://softwyx.com";
+            const lastmod = new Date().toISOString().split("T")[0];
+            const routes = [
+                "/",
+                "/experience",
+                "/education",
+                "/skills",
+                "/projects",
+                "/github"
+            ];
+
             // === Generate sitemap.xml ===
-            const sitemap = `<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://softwyx.com/experience</loc>
-    <lastmod>2025-09-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://softwyx.com/education</loc>
-    <lastmod>2025-09-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://softwyx.com/skills</loc>
-    <lastmod>2025-09-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://softwyx.com/projects</loc>
-    <lastmod>2025-09-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://softwyx.com/github</loc>
-    <lastmod>2025-09-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-</urlset>`;
+            const changefreqByRoute: Record<string, string> = {
+                "/"          : "monthly",
+                "/experience": "monthly",
+                "/education" : "yearly",
+                "/skills"    : "weekly",
+                "/projects"  : "weekly",
+                "/github"    : "daily"
+            };
+
+            const priorityByRoute: Record<string, string> = {
+                "/"          : "1.0",
+                "/experience": "1.0",
+                "/education" : "0.6",
+                "/skills"    : "0.8",
+                "/projects"  : "0.9",
+                "/github"    : "1.0"
+            };
+
+            const sitemapUrls = routes
+                .map((route) => {
+                    const loc = route === "/" ? siteUrl : `${siteUrl}${route}`;
+                    const changefreq = changefreqByRoute[route] || "monthly";
+                    const priority = priorityByRoute[route] || "0.5";
+
+                    return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+                })
+                .join("\n");
+
+            const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls}\n</urlset>`;
 
             writeFileSync(join(outDir, "sitemap.xml"), sitemap, "utf-8");
 
@@ -55,7 +63,7 @@ export function seoFilesPlugin(): Plugin {
 Allow: /
 Disallow: /*.json$
 
-Sitemap: https://softwyx.com/sitemap.xml
+Sitemap: ${siteUrl}/sitemap.xml
 
 # Performance
 Crawl-delay: 1`;

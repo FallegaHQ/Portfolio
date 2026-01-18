@@ -2,7 +2,7 @@
   "personalInfo": {
     "fullName": "SAKHRAOUI Omar",
     "title": "Senior Full-Stack Developer",
-    "summary": "Senior Full-Stack Developer with 10+ years of experience shipping reliable products and scalable systems across web and mobile. I specialize in PHP ecosystems (Laravel/Symfony) and modern frontend (React/TypeScript, Angular), with a strong focus on clean architecture, performance, and maintainability. I work closely with clients and product teams to turn requirements into clear, deliverable plans—then execute with quality, tests, and pragmatic engineering. Comfortable owning features end-to-end (design → API → UI → deployment) and mentoring teammates to raise the bar.",
+    "summary": "Senior Full-Stack Developer with 10+ years of experience shipping reliable products and scalable systems across web and mobile. I specialize in PHP ecosystems (Laravel/Symfony) and modern frontend (React/TypeScript, Angular, Vue), with a strong focus on clean architecture, performance, and maintainability. I work closely with clients and product teams to turn requirements into clear, deliverable plans—then execute with quality, tests, and pragmatic engineering. Comfortable owning features end-to-end (design → API → UI → deployment) and mentoring teammates to raise the bar.",
     "email": "contact@softwyx.com",
     "location": "Remote / Global",
     "website": "https://softwyx.com",
@@ -15,7 +15,7 @@
       "position": "Full-Stack Developer",
       "location": "Sfax, TN",
       "startDate": "2024-10",
-      "endDate": "2025-04",
+      "endDate": "2025-06",
       "description": "Full-stack developer responsible for building, deploying, and maintaining scalable web applications using Symfony.",
       "technologies": [
         "PHP 8",
